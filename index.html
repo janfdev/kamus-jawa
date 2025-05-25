@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kamus Binary Search</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 min-h-screen flex flex-col items-center p-6">
+    <div class="max-w-xl mx-auto bg-white rounded-xl shadow-md p-6">
+      <h1 class="text-2xl font-bold mb-4 text-center">
+        Simulasi Binary Search Kamus Jawa
+      </h1>
+
+      <input
+        id="inputKata"
+        type="text"
+        placeholder="Masukkan kata..."
+        class="w-full p-2 border border-gray-300 rounded mb-4"
+      />
+      <button
+        onclick="cariKata()"
+        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+      >
+        Cari Kata
+      </button>
+
+      <div
+        id="arrayDisplay"
+        class="flex justify-center space-x-2 mt-6 text-center"
+      ></div>
+
+      <div
+        id="log"
+        class="mt-6 text-sm text-gray-700 whitespace-pre-line bg-gray-50 p-4 rounded border"
+      ></div>
+    </div>
+
+    <script>
+      // Tampilkan array awal saat halaman dimuat
+      window.onload = () => tampilkanArray();
+
+      const kamus = [
+        "aku",
+        "bocah",
+        "dino",
+        "kowe",
+        "kula",
+        "mas",
+        "ora",
+        "urip",
+      ];
+      const arrayDisplay = document.getElementById("arrayDisplay");
+      const log = document.getElementById("log");
+
+      // Fungsi untuk menggambar array
+      function tampilkanArray(left = -1, mid = -1, right = -1) {
+        arrayDisplay.innerHTML = "";
+        kamus.forEach((kata, i) => {
+          let bg = "bg-white";
+          if (i === left) bg = "bg-green-200";
+          else if (i === mid) bg = "bg-yellow-200";
+          else if (i === right) bg = "bg-red-200";
+
+          arrayDisplay.innerHTML += `
+            <div class="p-2 w-16 border rounded ${bg}">
+                <div class="text-sm font-medium">${kata}</div>
+                <div class="text-xs text-gray-500">[${i}]</div>
+            </div>
+            `;
+        });
+      }
+
+      // Fungsi utama binary search dengan simulasi
+      function cariKata() {
+        const target = document
+          .getElementById("inputKata")
+          .value.trim()
+          .toLowerCase();
+        log.innerText = "";
+        let left = 0;
+        let right = kamus.length - 1;
+        let langkah = 1;
+        let ditemukan = false;
+
+        const delay = 1000;
+
+        function iterasi() {
+          if (left > right) {
+            log.innerText += `\nKata "${target}" tidak ditemukan di kamus.`;
+            tampilkanArray(); // Reset tampilan
+            return;
+          }
+
+          const mid = Math.floor((left + right) / 2);
+          tampilkanArray(left, mid, right);
+
+          log.innerText += `Langkah ${langkah++}:\n`;
+          log.innerText += `  Left = ${left} (${kamus[left]})\n`;
+          log.innerText += `  Mid = ${mid} (${kamus[mid]})\n`;
+          log.innerText += `  Right = ${right} (${kamus[right]})\n`;
+
+          if (kamus[mid] === target) {
+            log.innerText += `\n✅ Kata "${target}" ditemukan di indeks ${mid}.`;
+            tampilkanArray(left, mid, right);
+            return;
+          } else if (kamus[mid] < target) {
+            log.innerText += `  → "${target}" lebih besar dari "${kamus[mid]}", geser ke kanan\n\n`;
+            left = mid + 1;
+          } else {
+            log.innerText += `  → "${target}" lebih kecil dari "${kamus[mid]}", geser ke kiri\n\n`;
+            right = mid - 1;
+          }
+
+          setTimeout(iterasi, delay); // Simulasi proses
+        }
+
+        iterasi();
+      }
+    </script>
+  </body>
+</html>
