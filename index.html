@@ -1,31 +1,133 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kamus Jawa</title>
+    <title>Simulasi Binary Search Kamus Jawa</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
-    <div class="flex flex-col h-screen items-center justify-center">
-      <h1 class="text-xl capitalize mb-2">
-        Pilih Salah Satu dari project ini : (klik aja)
+  <body class="bg-gray-100 flex justify-center items-center min-h-screen p-4">
+    <div class="bg-white shadow-md rounded-lg p-6 max-w-xl w-full">
+      <h1 class="text-2xl font-bold text-center mb-4">
+        Simulasi Binary Search Kamus Jawa
       </h1>
-      <ol
-        class="list-inside list-decimal flex flex-col items-center gap-4 justify-between"
+
+      <input
+        id="inputKata"
+        type="text"
+        placeholder="Masukkan kata Indonesia"
+        class="w-full p-2 border rounded mb-4 bg-blue-50"
+      />
+
+      <button
+        onclick="mulaiSimulasi()"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded w-full mb-4"
       >
-        <li class="bg-purple-500 text-white p-3 rounded-md w-full">
-          <a href="dua.html" class="decoration-none">Simulasi Binary Search</a>
-        </li>
-        <li class="bg-green-500 text-white p-3 rounded-md w-full">
-          <a href="cihuy.html" class="decoration-none">Kamus Jawa</a>
-        </li>
-        <li class="bg-yellow-500 text-white p-3 rounded-md w-full">
-          <a href="tiga.html" class="decoration-none"
-            >Simulasi Binary Search With Result Kamus</a
-          >
-        </li>
-      </ol>
-    </div>
+        Cari Kata
+      </button>
+
+      <!-- Daftar kata -->
+      <div id="kataList" class="flex flex-wrap gap-2 justify-center mb-4"></div>
+
+      <!-- Simulasi log -->
+      <div
+        id="log"
+        class="bg-gray-50 p-4 rounded text-sm whitespace-pre-line font-mono"
+      ></div>
+
+     <!-- Hasil Terjemahan -->
+        <div id="hasilTerjemahan" class="mt-4 text-sm">
+            <p><strong>Bahasa Indonesia</strong><br><span id="terjemahanID"></span></p>
+            <p class="mt-2"><strong>Bahasa Jawa</strong><br><span id="terjemahanJW"></span></p>
+        </div>
+  
+
+    <script>
+      const kamus = [
+        { indonesia: "aku", jawa: "kula" },
+        { indonesia: "anak", jawa: "bocah" },
+        { indonesia: "dina", jawa: "dinten" },
+        { indonesia: "kowe", jawa: "panjenengan" },
+        { indonesia: "makan", jawa: "nedha" },
+        { indonesia: "mas", jawa: "kangmas" },
+        { indonesia: "ora", jawa: "mboten" },
+        { indonesia: "urip", jawa: "gesang" },
+      ];
+
+      kamus.sort((a, b) => a.indonesia.localeCompare(b.indonesia));
+
+      // Tampilkan list kata
+      const kataList = document.getElementById("kataList");
+      function tampilkanKata(highlightIdx = -1) {
+        kataList.innerHTML = "";
+        kamus.forEach((item, i) => {
+          const box = document.createElement("div");
+          box.className = `px-3 py-1 rounded border ${
+            highlightIdx === i ? "bg-green-200 font-bold" : "bg-gray-100"
+          }`;
+          box.textContent = `${item.indonesia} [${i}]`;
+          kataList.appendChild(box);
+        });
+      }
+      tampilkanKata();
+
+      const logBox = document.getElementById("log");
+
+      async function mulaiSimulasi() {
+        document.getElementById("terjemahanID").textContent = "";
+        document.getElementById("terjemahanJW").textContent = "";
+
+        const input = document
+          .getElementById("inputKata")
+          .value.trim()
+          .toLowerCase();
+        logBox.innerHTML = "";
+        tampilkanKata(); // reset
+
+        if (!input) {
+          logBox.innerHTML = "Masukkan kata terlebih dahulu.";
+          return;
+        }
+
+        let left = 0;
+        let right = kamus.length - 1;
+        let step = 1;
+
+        async function delay(ms) {
+          return new Promise((resolve) => setTimeout(resolve, ms));
+        }
+
+        while (left <= right) {
+          const mid = Math.floor((left + right) / 2);
+          tampilkanKata(mid);
+          let log = `Langkah ${step}:\nLeft = ${left} (${kamus[left].indonesia})\nMid = ${mid} (${kamus[mid].indonesia})\nRight = ${right} (${kamus[right].indonesia})\n`;
+
+          await delay(1000); // tunggu 1 detik
+
+          if (kamus[mid].indonesia === input) {
+            log += `✅ Kata "${input}" ditemukan di indeks ${mid}.\n`;
+            logBox.innerHTML += log;
+            tampilkanKata(mid);
+
+            // Tampilkan hasil terjemahan
+            document.getElementById("terjemahanID").textContent = kamus[mid].indonesia.charAt(0).toUpperCase() + kamus[mid].indonesia.slice(1);
+            document.getElementById("terjemahanJW").textContent = kamus[mid].jawa.charAt(0).toUpperCase() + kamus[mid].jawa.slice(1);
+            return;
+          } else if (kamus[mid].indonesia > input) {
+            log += `→ "${input}" lebih kecil dari "${kamus[mid].indonesia}", geser ke kiri\n\n`;
+            right = mid - 1;
+          } else {
+            log += `→ "${input}" lebih besar dari "${kamus[mid].indonesia}", geser ke kanan\n\n`;
+            left = mid + 1;
+          }
+
+          logBox.innerHTML += log;
+          step++;
+          await delay(500);
+        }
+
+        logBox.innerHTML += `❌ Kata "${input}" tidak ditemukan dalam kamus.\n`;
+      }
+    </script>
   </body>
 </html>
