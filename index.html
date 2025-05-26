@@ -27,7 +27,7 @@
       </button>
 
       <!-- Daftar kata -->
-      <div id="kataList" class="flex flex-wrap gap-2 justify-start mb-4"></div>
+      <div id="kataList" class="flex flex-wrap gap-2 justify-start mb-4 "></div>
 
       <!-- Simulasi log -->
       <div
@@ -62,7 +62,7 @@
         kataList.innerHTML = "";
         kamus.forEach((item, i) => {
           const box = document.createElement("div");
-          box.className = `px-3 py-1 rounded border ${
+          box.className = `px-3 py-1 rounded-full border ${
             highlightIdx === i ? "bg-green-200 font-bold" : "bg-gray-100"
           }`;
           box.textContent = `${item.indonesia} [${i}]`;
