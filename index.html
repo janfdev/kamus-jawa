@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Simulasi Binary Search Kamus Jawa</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="sweetalert2.min.js"></script>
-    <link rel="stylesheet" href="sweetalert2.min.css">
+    <!-- <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css"> -->
   </head>
   <body class="bg-gray-100 flex justify-center items-center min-h-screen p-4">
     <div class="bg-white shadow-md rounded-lg p-6 max-w-xl w-full">
@@ -44,6 +44,7 @@
         </div>
   
 
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
       const kamus = [
         { indonesia: "aku", jawa: "kula" },
@@ -90,9 +91,9 @@
           Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Something went wrong!",
-          footer: '<a href="#">Why do I have this issue?</a>'
+          text: "Teks harus diisi",
         });
+        return;
         }
 
         let left = 0;
