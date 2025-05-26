@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Simulasi Binary Search Kamus Jawa</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
   </head>
   <body class="bg-gray-100 flex justify-center items-center min-h-screen p-4">
     <div class="bg-white shadow-md rounded-lg p-6 max-w-xl w-full">
@@ -21,7 +23,7 @@
 
       <button
         onclick="mulaiSimulasi()"
-        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded w-full mb-4"
+        class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded w-full mb-4"
       >
         Cari Kata
       </button>
@@ -37,8 +39,8 @@
 
      <!-- Hasil Terjemahan -->
         <div id="hasilTerjemahan" class="mt-4 text-sm">
-            <p><strong>Bahasa Indonesia</strong><br><span id="terjemahanID"></span></p>
-            <p class="mt-2"><strong>Bahasa Jawa</strong><br><span id="terjemahanJW"></span></p>
+            <h2 class="text-lg"><strong>Bahasa Indonesia</strong><br><span id="terjemahanID"></span></h2>
+            <h2 class="text-lg mt-2"><strong>Bahasa Jawa</strong><br><span id="terjemahanJW"></span></h2>
         </div>
   
 
@@ -82,7 +84,7 @@
           .value.trim()
           .toLowerCase();
         logBox.innerHTML = "";
-        tampilkanKata(); // reset
+        tampilkanKata(); 
 
         if (!input) {
           logBox.innerHTML = "Masukkan kata terlebih dahulu.";
