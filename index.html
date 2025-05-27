@@ -5,111 +5,155 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Simulasi Binary Search Kamus Jawa</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- <script src="sweetalert2.min.js"></script>
-    <link rel="stylesheet" href="sweetalert2.min.css"> -->
   </head>
   <body class="bg-gray-100 flex justify-center items-center min-h-screen p-4">
-    <div class="bg-white shadow-md rounded-lg p-6 max-w-xl w-full">
-      <h1 class="text-2xl font-bold text-center mb-4">
-       Binary Search Kamus Jawa
-      </h1>
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-6">
+      <!-- Kiri: Form dan Hasil -->
+      <div class="bg-white shadow-xl rounded-xl p-6">
+        <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">
+          Simulasi Binary Search Kamus Jawa
+        </h1>
 
-      <input
-        id="inputKata"
-        type="text"
-        placeholder="Masukkan kata Indonesia"
-        class="w-full focus:outline-none focus:border-2 focus:border-blue-300 p-2 border rounded mb-4 bg-blue-50"
-      />
+        <input
+          id="inputKata"
+          type="text"
+          placeholder="Masukkan kata Indonesia"
+          class="w-full focus:outline-none focus:ring-2 focus:ring-green-300 p-3 border border-gray-300 rounded-lg mb-4 bg-green-100"
+        />
 
-      <button
-        onclick="mulaiSimulasi()"
-        class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded w-full mb-4"
-      >
-        Cari Kata
-      </button>
+        <button
+          onclick="mulaiSimulasi()"
+          class="bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded-lg w-full mb-6 transition duration-200"
+        >
+          Cari Kata
+        </button>
 
-      <!-- Daftar kata -->
-      <div id="kataList" class="flex flex-wrap gap-2 justify-start mb-4 "></div>
-
-      <!-- Simulasi log -->
-      <div
-        id="log"
-        class="bg-gray-50 shadow-lg p-4 rounded text-sm whitespace-pre-line font-mono"
-      ></div>
-
-     <!-- Hasil Terjemahan -->
-        <div id="hasilTerjemahan" class="mt-4 ring-2 ring-green-600 rounded-md p-2">
-            <h2 class="text-sm"><strong>Bahasa Indonesia</strong><br>
-              <span id="terjemahanID" class="border-l-2 border-l-gray-700 pl-2"></span>
-            </h2>
-            <h2 class="text-sm mt-2"><strong>Bahasa Jawa</strong>
-              <br>
-              <span id="terjemahanJW" class="border-l-2 border-l-gray-700 pl-2"></span>
-            </h2>
+        <!-- Daftar kata -->
+        <div>
+          <label class="font-semibold mb-2 block text-gray-600"
+            >Daftar Kata:</label
+          >
+          <div
+            id="kataList"
+            class="flex flex-wrap gap-2 mb-2 overflow-hidden transition-all duration-500"
+          ></div>
         </div>
-  
 
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <!-- Hasil Terjemahan -->
+        <div id="hasilTerjemahan" class="mt-6 border-t pt-4">
+          <h2 class="text-gray-700 font-semibold">Bahasa Indonesia</h2>
+          <p
+            id="terjemahanID"
+            class="pl-2 border-l-4 border-blue-400 text-gray-800 font-medium"
+          ></p>
+          <h2 class="text-gray-700 font-semibold mt-4">Bahasa Jawa</h2>
+          <p
+            id="terjemahanJW"
+            class="pl-2 border-l-4 border-green-400 text-gray-800 font-medium"
+          ></p>
+        </div>
+      </div>
+
+      <!-- Kanan: Log -->
+      <div
+        class="bg-white shadow-lg p-6 rounded-xl font-mono text-sm overflow-auto"
+      >
+        <h2 class="text-lg font-semibold text-gray-800 mb-3">
+          Langkah Iterasi
+        </h2>
+        <div
+          id="log"
+          class="text-gray-700 border-l-2 border-gray-500 pl-2 whitespace-pre-line"
+        ></div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-    const kamus = [
-      { indonesia: "aku", jawa: "kula" },
-      { indonesia: "anak", jawa: "bocah" },
-      { indonesia: "hari", jawa: "dinten" },
-      { indonesia: "kamu", jawa: "panjenengan" },
-      { indonesia: "makan", jawa: "dahar" },
-      { indonesia: "minum", jawa: "ngombe" },
-      { indonesia: "mas", jawa: "pak" },
-      { indonesia: "tidak", jawa: "mboten" },
-      { indonesia: "hidup", jawa: "gesang" },
-      { indonesia: "pergi", jawa: "kesah" },
-      { indonesia: "rumah", jawa: "omah" },
-      { indonesia: "teman", jawa: "kanca" },
-      { indonesia: "ayah", jawa: "bapak" },
-      { indonesia: "ibu", jawa: "ibu" },
-      { indonesia: "jalan", jawa: "mlaku" },
-      { indonesia: "baik", jawa: "becik" },
-      { indonesia: "jelek", jawa: "ala" },
-      { indonesia: "besar", jawa: "ageng" },
-      { indonesia: "kecil", jawa: "cilik" }
-    ];
+      const kamus = [
+        { indonesia: "aku", jawa: "kula" },
+        { indonesia: "anak", jawa: "bocah" },
+        { indonesia: "hari", jawa: "dinten" },
+        { indonesia: "kamu", jawa: "panjenengan" },
+        { indonesia: "makan", jawa: "dahar" },
+        { indonesia: "minum", jawa: "ngombe" },
+        { indonesia: "mas", jawa: "pak" },
+        { indonesia: "tidak", jawa: "mboten" },
+        { indonesia: "hidup", jawa: "gesang" },
+        { indonesia: "pergi", jawa: "kesah" },
+        { indonesia: "rumah", jawa: "omah" },
+        { indonesia: "teman", jawa: "kanca" },
+        { indonesia: "ayah", jawa: "bapak" },
+        { indonesia: "ibu", jawa: "ibu" },
+        { indonesia: "jalan", jawa: "mlaku" },
+        { indonesia: "baik", jawa: "becik" },
+        { indonesia: "jelek", jawa: "ala" },
+        { indonesia: "besar", jawa: "ageng" },
+        { indonesia: "kecil", jawa: "cilik" },
+      ];
 
       kamus.sort((a, b) => a.indonesia.localeCompare(b.indonesia));
 
-      // Tampilkan list kata
       const kataList = document.getElementById("kataList");
-      function tampilkanKata(highlightIdx = -1) {
+      const logBox = document.getElementById("log");
+
+      let showAll = false; // toggle status untuk Show More / Less
+
+      function tampilkanKata(highlightIdx = -1, showAllKata = false) {
         kataList.innerHTML = "";
+
+        const container = document.createElement("div");
+        container.className = "flex flex-wrap gap-2";
+
+        const limit = showAllKata ? kamus.length : 7;
+
         kamus.forEach((item, i) => {
+          if (!showAllKata && i >= limit) return;
+
           const box = document.createElement("div");
-          box.className = `px-3 py-1 rounded-full border ${
+          box.className = `px-3 py-1 rounded-full border text-sm ${
             highlightIdx === i ? "bg-green-200 font-bold" : "bg-gray-100"
           }`;
           box.textContent = `${item.indonesia} [${i}]`;
-          kataList.appendChild(box);
+          container.appendChild(box);
         });
-      }
-      tampilkanKata();
 
-      const logBox = document.getElementById("log");
+        kataList.appendChild(container);
+
+        // Tombol Show More / Less jika kata lebih dari limit
+        if (kamus.length > 7) {
+          const toggleBtn = document.createElement("button");
+          toggleBtn.textContent = showAllKata ? "Sembunyikan" : "Lihat Semua";
+          toggleBtn.className =
+            "mt-2 text-blue-500 underline text-sm focus:outline-none";
+          toggleBtn.onclick = () => {
+            showAll = !showAll;
+            tampilkanKata(-1, showAll);
+          };
+          kataList.appendChild(toggleBtn);
+        }
+      }
+
+      tampilkanKata();
 
       async function mulaiSimulasi() {
         document.getElementById("terjemahanID").textContent = "";
         document.getElementById("terjemahanJW").textContent = "";
+        logBox.innerHTML = "";
 
         const input = document
           .getElementById("inputKata")
           .value.trim()
           .toLowerCase();
-        logBox.innerHTML = "";
-        tampilkanKata(); 
+
+        tampilkanKata(-1, showAll);
 
         if (!input) {
           Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Teks harus diisi",
-        });
-        return;
+            icon: "error",
+            title: "Oops...",
+            text: "Teks harus diisi",
+          });
+          return;
         }
 
         let left = 0;
@@ -122,19 +166,23 @@
 
         while (left <= right) {
           const mid = Math.floor((left + right) / 2);
-          tampilkanKata(mid);
+          tampilkanKata(mid, true);
+
           let log = `Langkah ${step}:\nLeft = ${left} (${kamus[left].indonesia})\nMid = ${mid} (${kamus[mid].indonesia})\nRight = ${right} (${kamus[right].indonesia})\n`;
 
-          await delay(1000); // tunggu 1 detik
+          await delay(1000);
 
           if (kamus[mid].indonesia === input) {
             log += `✅ Kata "${input}" ditemukan di indeks ${mid}.\n`;
             logBox.innerHTML += log;
-            tampilkanKata(mid);
 
-            // Tampilkan hasil terjemahan
-            document.getElementById("terjemahanID").textContent = kamus[mid].indonesia.charAt(0).toUpperCase() + kamus[mid].indonesia.slice(1);
-            document.getElementById("terjemahanJW").textContent = kamus[mid].jawa.charAt(0).toUpperCase() + kamus[mid].jawa.slice(1);
+            tampilkanKata(mid, true);
+            document.getElementById("terjemahanID").textContent =
+              kamus[mid].indonesia.charAt(0).toUpperCase() +
+              kamus[mid].indonesia.slice(1);
+            document.getElementById("terjemahanJW").textContent =
+              kamus[mid].jawa.charAt(0).toUpperCase() +
+              kamus[mid].jawa.slice(1);
             return;
           } else if (kamus[mid].indonesia > input) {
             log += `→ "${input}" lebih kecil dari "${kamus[mid].indonesia}", geser ke kiri\n\n`;
