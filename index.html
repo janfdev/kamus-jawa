@@ -5,8 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Simulasi Binary Search Kamus Jawa</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              gummy: "Sour Gummy",
+            },
+            colors: {
+              clifford: "#da373d",
+            },
+          },
+        },
+      };
+    </script>
   </head>
-  <body class="bg-gray-100 flex justify-center items-center min-h-screen p-4">
+  <body
+    class="bg-gray-100 flex font-gummy justify-center items-center min-h-screen p-4"
+  >
     <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-6">
       <!-- Kiri: Form dan Hasil -->
       <div class="bg-white shadow-xl rounded-xl p-6">
@@ -56,7 +78,7 @@
 
       <!-- Kanan: Log -->
       <div
-        class="bg-white shadow-lg p-6 rounded-xl font-mono text-sm overflow-auto"
+        class="bg-white shadow-lg p-6 rounded-xl text-sm overflow-auto"
       >
         <h2 class="text-lg font-semibold text-gray-800 mb-3">
           Langkah Iterasi
