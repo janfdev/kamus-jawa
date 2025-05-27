@@ -34,28 +34,44 @@
       <!-- Simulasi log -->
       <div
         id="log"
-        class="bg-gray-50 p-4 rounded text-sm whitespace-pre-line font-mono"
+        class="bg-gray-50 shadow-lg p-4 rounded text-sm whitespace-pre-line font-mono"
       ></div>
 
      <!-- Hasil Terjemahan -->
-        <div id="hasilTerjemahan" class="mt-4 text-sm">
-            <h2 class="text-lg"><strong>Bahasa Indonesia</strong><br><span id="terjemahanID"></span></h2>
-            <h2 class="text-lg mt-2"><strong>Bahasa Jawa</strong><br><span id="terjemahanJW"></span></h2>
+        <div id="hasilTerjemahan" class="mt-4 ring-2 ring-green-600 rounded-md p-2">
+            <h2 class="text-lg"><strong>Bahasa Indonesia</strong><br>
+              <span id="terjemahanID" class="border-l-2 border-l-gray-700 pl-2"></span>
+            </h2>
+            <h2 class="text-lg mt-2"><strong>Bahasa Jawa</strong>
+              <br>
+              <span id="terjemahanJW" class="border-l-2 border-l-gray-700 pl-2"></span>
+            </h2>
         </div>
   
 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-      const kamus = [
-        { indonesia: "aku", jawa: "kula" },
-        { indonesia: "anak", jawa: "bocah" },
-        { indonesia: "dina", jawa: "dinten" },
-        { indonesia: "kowe", jawa: "panjenengan" },
-        { indonesia: "makan", jawa: "nedha" },
-        { indonesia: "mas", jawa: "kangmas" },
-        { indonesia: "ora", jawa: "mboten" },
-        { indonesia: "urip", jawa: "gesang" },
-      ];
+    const kamus = [
+      { indonesia: "aku", jawa: "kula" },
+      { indonesia: "anak", jawa: "bocah" },
+      { indonesia: "hari", jawa: "dinten" },
+      { indonesia: "kamu", jawa: "panjenengan" },
+      { indonesia: "makan", jawa: "dahar" },
+      { indonesia: "minum", jawa: "ngombe" },
+      { indonesia: "mas", jawa: "pak" },
+      { indonesia: "tidak", jawa: "mboten" },
+      { indonesia: "hidup", jawa: "gesang" },
+      { indonesia: "pergi", jawa: "kesah" },
+      { indonesia: "rumah", jawa: "omah" },
+      { indonesia: "teman", jawa: "kanca" },
+      { indonesia: "ayah", jawa: "bapak" },
+      { indonesia: "ibu", jawa: "ibu" },
+      { indonesia: "jalan", jawa: "mlaku" },
+      { indonesia: "baik", jawa: "becik" },
+      { indonesia: "jelek", jawa: "ala" },
+      { indonesia: "besar", jawa: "ageng" },
+      { indonesia: "kecil", jawa: "cilik" }
+    ];
 
       kamus.sort((a, b) => a.indonesia.localeCompare(b.indonesia));
 
