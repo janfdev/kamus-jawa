@@ -2,6 +2,7 @@
 
 <h2>TechStack :</h2>
 <br clear="both">
-- HTML
-- Tailwind CSS
-- JAVAsdc
+- **HTML**
+- **Tailwind CSS**
+- **JavaScript**
+- **Sweet Alert**
