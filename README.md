@@ -1,7 +1,6 @@
-<h1>Kamus Jawa</h1>
+# Kamus Jawa
 
-<h2>TechStack :</h2>
-<br clear="both">
+## TechStack :
 - **HTML**
 - **Tailwind CSS**
 - **JavaScript**
