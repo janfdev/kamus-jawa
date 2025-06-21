@@ -36,6 +36,15 @@
           Simulasi Binary Search Kamus Jawa
         </h1>
 
+        <div class="flex justify-end mb-4">
+          <a
+            href="input-kamus.html"
+            class="text-sm bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition duration-200"
+          >
+            + Tambah Kata Baru
+          </a>
+        </div>
+
         <!-- Form cari -->
         <input
           id="inputKata"
@@ -92,7 +101,6 @@
     </div>
 
     <script>
-      // Ambil dari localStorage atau pakai default
       let kamus = JSON.parse(localStorage.getItem("kamus")) || [
         { indonesia: "aku", jawa: "kula" },
         { indonesia: "makan", jawa: "dahar" },
