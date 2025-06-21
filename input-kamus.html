@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Input Data Kamus Jawa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              outfit: "Outfit"
+            }
+          }
+        }
+      };
+    </script>
+  </head>
+  <body
+    class="bg-gray-100 font-outfit min-h-screen flex justify-center items-center p-6"
+  >
+    <div class="w-full max-w-6xl gap-6 flex md:flex-row flex-col items-center">
+      <!-- Form Tambah -->
+      <div class="bg-white p-6 rounded-xl shadow-md w-full">
+        <h1 class="text-2xl font-bold text-center mb-6">
+          Tambah Data Kamus Jawa
+        </h1>
+
+        <div class="mb-4">
+          <input
+            id="inputID"
+            type="text"
+            placeholder="Kata Indonesia"
+            class="mb-3 w-full p-3 border border-gray-300 outline-none rounded-md bg-white focus:ring-2 focus:ring-green-500"
+          />
+          <input
+            id="inputJW"
+            type="text"
+            placeholder="Kata Jawa"
+            class="mb-4 w-full p-3 border border-gray-300 outline-none rounded-md bg-white focus:ring-2 focus:ring-green-500"
+          />
+          <button
+            onclick="tambahKata()"
+            class="bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded-md w-full transition duration-200"
+          >
+            Tambah Kata ke Kamus
+          </button>
+        </div>
+      </div>
+
+      <!-- Tabel -->
+      <div class="bg-white p-6 rounded-xl shadow-md w-full">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4 text-center">
+          Daftar Kata di Kamus
+        </h2>
+        <div class="overflow-x-auto rounded-md border border-gray-200">
+          <table class="min-w-full divide-y divide-gray-200 text-sm text-left">
+            <thead class="bg-green-600 text-white">
+              <tr>
+                <th class="px-4 py-2 font-medium">ID</th>
+                <th class="px-4 py-2 font-medium">Indonesia</th>
+                <th class="px-4 py-2 font-medium">Jawa</th>
+              </tr>
+            </thead>
+            <tbody
+              class="divide-y divide-green-200 bg-white"
+              id="kataList"
+            ></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let kamus = JSON.parse(localStorage.getItem("kamus")) || [
+        { indonesia: "aku", jawa: "kula" },
+        { indonesia: "makan", jawa: "dahar" },
+        { indonesia: "minum", jawa: "ngombe" },
+        { indonesia: "teman", jawa: "kanca" },
+        { indonesia: "ayah", jawa: "bapak" },
+        { indonesia: "ibu", jawa: "ibu" }
+      ];
+
+      const kataList = document.getElementById("kataList");
+      const logBox = document.getElementById("log");
+      let showAll = false;
+
+      function simpanKamus() {
+        kamus.sort((a, b) => a.indonesia.localeCompare(b.indonesia));
+        localStorage.setItem("kamus", JSON.stringify(kamus));
+      }
+
+      function tampilkanKata() {
+        kataList.innerHTML = "";
+        kamus.forEach((item, index) => {
+          const trKata = `
+      <tr class="*:text-gray-900 *:first:font-medium text-center">
+        <td class="px-3 py-2 whitespace-nowrap">${index + 1}</td>
+        <td class="px-3 py-2 whitespace-nowrap">${item.indonesia}</td>
+        <td class="px-3 py-2 whitespace-nowrap">${item.jawa}</td>
+      </tr>
+    `;
+          kataList.insertAdjacentHTML("beforeend", trKata);
+        });
+      }
+
+      function tambahKata() {
+        const id = document
+          .getElementById("inputID")
+          .value.trim()
+          .toLowerCase();
+        const jw = document
+          .getElementById("inputJW")
+          .value.trim()
+          .toLowerCase();
+
+        if (!id || !jw) {
+          Swal.fire("Gagal", "Kedua input harus diisi", "error");
+          return;
+        }
+
+        if (kamus.some((item) => item.indonesia === id)) {
+          Swal.fire("Gagal", "Kata sudah ada di kamus", "warning");
+          return;
+        }
+
+        kamus.push({ indonesia: id, jawa: jw });
+        simpanKamus();
+
+        document.getElementById("inputID").value = "";
+        document.getElementById("inputJW").value = "";
+        Swal.fire("Berhasil", "Kata ditambahkan ke kamus", "success");
+      }
+
+      function resetKamus() {
+        Swal.fire({
+          title: "Yakin ingin menghapus semua data?",
+          text: "Tindakan ini tidak bisa dibatalkan!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Ya, hapus!",
+          cancelButtonText: "Batal"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            localStorage.removeItem("kamus");
+            location.reload();
+          }
+        });
+      }
+
+      simpanKamus();
+      tampilkanKata();
+    </script>
+  </body>
+</html>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Simulasi Binary Search Kamus Jawa</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -18,116 +19,114 @@
         theme: {
           extend: {
             fontFamily: {
-              outfit: "Outfit",
-            },
-          },
-        },
+              outfit: "Outfit"
+            }
+          }
+        }
       };
     </script>
   </head>
   <body
-    class="bg-gray-100 flex font-outfit justify-center items-center min-h-screen p-4"
+    class="bg-gray-100 font-outfit min-h-screen flex justify-center items-center p-4"
   >
-    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-6">
-      <!-- Kiri: Form dan Hasil -->
-      <div class="bg-white shadow-xl rounded-xl p-6">
-        <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-6 w-full">
+      <!-- Kiri: Form dan hasil -->
+      <div class="bg-white p-6 rounded-xl shadow-md w-full">
+        <h1 class="text-2xl font-bold text-center mb-4">
           Simulasi Binary Search Kamus Jawa
         </h1>
 
+        <!-- Form cari -->
         <input
           id="inputKata"
           type="text"
-          placeholder="Masukkan kata Indonesia"
+          placeholder="Cari kata Indonesia"
           class="w-full focus:outline-none focus:ring-2 focus:ring-green-300 p-3 border border-gray-300 rounded-lg mb-4 bg-green-100"
         />
-
         <button
           onclick="mulaiSimulasi()"
-          class="bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded-lg w-full mb-6 transition duration-200"
+          class="bg-green-600 hover:bg-green-700 text-white w-full px-4 py-2 rounded mb-6"
         >
           Cari Kata
         </button>
 
         <!-- Daftar kata -->
-        <div>
-          <label class="font-semibold mb-2 block text-gray-600"
-            >Daftar Kata:</label
-          >
-          <div
-            id="kataList"
-            class="flex flex-wrap gap-2 mb-2 overflow-hidden transition-all duration-500"
-          ></div>
-        </div>
+        <label class="block font-semibold text-gray-600 mb-1"
+          >Daftar Kata:</label
+        >
+        <div id="kataList" class="flex flex-wrap gap-2 mb-4"></div>
 
-        <!-- Hasil Terjemahan -->
-        <div id="hasilTerjemahan" class="mt-6 border-t pt-4">
-          <h2 class="text-gray-700 font-semibold">Bahasa Indonesia</h2>
+        <!-- Hasil -->
+        <div id="hasilTerjemahan" class="mt-4 border-t pt-4">
+          <h2 class="font-semibold text-gray-700">Bahasa Indonesia</h2>
           <p
             id="terjemahanID"
-            class="pl-2 border-l-4 border-blue-400 text-gray-800 font-medium"
+            class="pl-2 border-l-4 border-blue-400 font-medium text-gray-800"
           ></p>
-          <h2 class="text-gray-700 font-semibold mt-4">Bahasa Jawa</h2>
+          <h2 class="font-semibold text-gray-700 mt-2">Bahasa Jawa</h2>
           <p
             id="terjemahanJW"
-            class="pl-2 border-l-4 border-green-400 text-gray-800 font-medium"
+            class="pl-2 border-l-4 border-green-400 font-medium text-gray-800"
           ></p>
         </div>
+
+        <!-- Reset -->
+        <!-- <button
+          onclick="resetKamus()"
+          class="mt-6 text-sm text-red-600 hover:underline"
+        >
+          Reset Kamus (hapus semua)
+        </button> -->
       </div>
 
-      <!-- Kanan: Log -->
-      <div class="bg-white shadow-lg p-6 rounded-xl text-sm overflow-auto">
+      <!-- Kanan: log -->
+      <div class="bg-white p-6 rounded-xl shadow-md overflow-auto text-sm">
         <h2 class="text-lg font-semibold text-gray-800 mb-3">
           Langkah Iterasi
         </h2>
         <div
           id="log"
-          class="text-gray-700 border-l-2 border-gray-500 pl-2 whitespace-pre-line"
+          class="border-l-2 border-gray-500 pl-3 text-gray-700 whitespace-pre-line"
         ></div>
       </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
-      const kamus = [
+      // Ambil dari localStorage atau pakai default
+      let kamus = JSON.parse(localStorage.getItem("kamus")) || [
         { indonesia: "aku", jawa: "kula" },
-        { indonesia: "anak", jawa: "lare" },
-        { indonesia: "hari", jawa: "dinten" },
-        { indonesia: "kamu", jawa: "panjenengan" },
         { indonesia: "makan", jawa: "dahar" },
         { indonesia: "minum", jawa: "ngombe" },
-        { indonesia: "mas", jawa: "pak" },
-        { indonesia: "tidak", jawa: "mboten" },
-        { indonesia: "hidup", jawa: "gesang" },
-        { indonesia: "pergi", jawa: "kesah" },
-        { indonesia: "rumah", jawa: "griya" },
         { indonesia: "teman", jawa: "kanca" },
         { indonesia: "ayah", jawa: "bapak" },
-        { indonesia: "ibu", jawa: "ibu" },
-        { indonesia: "jalan", jawa: "mlaku" },
-        { indonesia: "baik", jawa: "sae" },
-        { indonesia: "jelek", jawa: "awon" },
-        { indonesia: "besar", jawa: "ageng" },
-        { indonesia: "kecil", jawa: "alit" },
+        { indonesia: "ibu", jawa: "ibu" }
       ];
-
-      kamus.sort((a, b) => a.indonesia.localeCompare(b.indonesia));
 
       const kataList = document.getElementById("kataList");
       const logBox = document.getElementById("log");
+      let showAll = false;
 
-      let showAll = false; // toggle status untuk Show More / Less
+      let inputKata = document.getElementById("inputKata");
+      inputKata.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          mulaiSimulasi();
+        }
+      });
+
+      function simpanKamus() {
+        kamus.sort((a, b) => a.indonesia.localeCompare(b.indonesia));
+        localStorage.setItem("kamus", JSON.stringify(kamus));
+      }
 
       function tampilkanKata(highlightIdx = -1, showAllKata = false) {
         kataList.innerHTML = "";
-
         const container = document.createElement("div");
         container.className = "flex flex-wrap gap-2";
-
         const limit = showAllKata ? kamus.length : 7;
 
         kamus.forEach((item, i) => {
           if (!showAllKata && i >= limit) return;
-
           const box = document.createElement("div");
           box.className = `px-3 py-1 rounded-full border text-sm ${
             highlightIdx === i ? "bg-green-200 font-bold" : "bg-gray-100"
@@ -141,8 +140,7 @@
         if (kamus.length > 7) {
           const toggleBtn = document.createElement("button");
           toggleBtn.textContent = showAllKata ? "Sembunyikan" : "Lihat Semua";
-          toggleBtn.className =
-            "mt-2 text-blue-500 underline text-sm focus:outline-none";
+          toggleBtn.className = "mt-2 text-blue-500 underline text-sm";
           toggleBtn.onclick = () => {
             showAll = !showAll;
             tampilkanKata(-1, showAll);
@@ -151,7 +149,50 @@
         }
       }
 
-      tampilkanKata();
+      function tambahKata() {
+        const id = document
+          .getElementById("inputID")
+          .value.trim()
+          .toLowerCase();
+        const jw = document
+          .getElementById("inputJW")
+          .value.trim()
+          .toLowerCase();
+
+        if (!id || !jw) {
+          Swal.fire("Gagal", "Kedua input harus diisi", "error");
+          return;
+        }
+
+        if (kamus.some((item) => item.indonesia === id)) {
+          Swal.fire("Gagal", "Kata sudah ada di kamus", "warning");
+          return;
+        }
+
+        kamus.push({ indonesia: id, jawa: jw });
+        simpanKamus();
+        tampilkanKata(-1, showAll);
+
+        document.getElementById("inputID").value = "";
+        document.getElementById("inputJW").value = "";
+        Swal.fire("Berhasil", "Kata ditambahkan ke kamus", "success");
+      }
+
+      function resetKamus() {
+        Swal.fire({
+          title: "Yakin ingin menghapus semua data?",
+          text: "Tindakan ini tidak bisa dibatalkan!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Ya, hapus!",
+          cancelButtonText: "Batal"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            localStorage.removeItem("kamus");
+            location.reload();
+          }
+        });
+      }
 
       async function mulaiSimulasi() {
         document.getElementById("terjemahanID").textContent = "";
@@ -162,15 +203,10 @@
           .getElementById("inputKata")
           .value.trim()
           .toLowerCase();
-
         tampilkanKata(-1, showAll);
 
         if (!input) {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Teks harus diisi",
-          });
+          Swal.fire("Oops", "Teks harus diisi", "error");
           return;
         }
 
@@ -178,7 +214,7 @@
         let right = kamus.length - 1;
         let step = 1;
 
-        async function delay(ms) {
+        function delay(ms) {
           return new Promise((resolve) => setTimeout(resolve, ms));
         }
 
@@ -191,10 +227,9 @@
           await delay(1000);
 
           if (kamus[mid].indonesia === input) {
-            log += `✅ Kata "${input}" ditemukan di indeks ${mid}.\n`;
+            log += `✅ Kata "${input}" ditemukan di indeks ${mid}\n\n`;
             logBox.innerHTML += log;
 
-            tampilkanKata(mid, true);
             document.getElementById("terjemahanID").textContent =
               kamus[mid].indonesia.charAt(0).toUpperCase() +
               kamus[mid].indonesia.slice(1);
@@ -217,6 +252,10 @@
 
         logBox.innerHTML += `❌ Kata "${input}" tidak ditemukan dalam kamus.\n`;
       }
+
+      // Load awal
+      simpanKamus();
+      tampilkanKata();
     </script>
   </body>
 </html>
