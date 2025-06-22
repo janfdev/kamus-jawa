@@ -100,6 +100,9 @@ async function mulaiSimulasi() {
     return;
   }
 
+  // Sort kamus sebelum binary search
+  kamus.sort((a, b) => a.indonesia.localeCompare(b.indonesia));
+
   let left = 0;
   let right = kamus.length - 1;
   let step = 1;
