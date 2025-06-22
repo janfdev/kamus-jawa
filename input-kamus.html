@@ -33,7 +33,7 @@
       <!-- Form Tambah -->
       <div class="bg-white p-6 rounded-xl shadow-md w-full">
         <h1 class="text-2xl font-bold text-center mb-6">
-          Tambah Data Kamus Jawa
+          Tambah Data Kamus Wolio
         </h1>
 
         <div class="mb-4">
@@ -83,7 +83,7 @@
 
     <script>
       let kamus = JSON.parse(localStorage.getItem("kamus")) || [
-        { indonesia: "aku", jawa: "kula" },
+        { indonesia: "ibu", wolio: "inaku" },
         { indonesia: "makan", jawa: "dahar" },
         { indonesia: "minum", jawa: "ngombe" },
         { indonesia: "teman", jawa: "kanca" },
@@ -107,7 +107,7 @@
       <tr class="*:text-gray-900 *:first:font-medium text-center">
         <td class="px-3 py-2 whitespace-nowrap">${index + 1}</td>
         <td class="px-3 py-2 whitespace-nowrap">${item.indonesia}</td>
-        <td class="px-3 py-2 whitespace-nowrap">${item.jawa}</td>
+        <td class="px-3 py-2 whitespace-nowrap">${item.wolio}</td>
       </tr>
     `;
           kataList.insertAdjacentHTML("beforeend", trKata);
