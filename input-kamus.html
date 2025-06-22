@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Input Data Kamus Jawa</title>
+    <title>Input Data Kamus Wolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -46,7 +46,7 @@
           <input
             id="inputWL"
             type="text"
-            placeholder="Kata Jawa"
+            placeholder="Kata Wolio"
             class="mb-4 w-full p-3 border border-gray-300 outline-none rounded-md bg-white focus:ring-2 focus:ring-green-500"
           />
           <button
@@ -119,12 +119,12 @@
           .getElementById("inputID")
           .value.trim()
           .toLowerCase();
-        const jw = document
+        const wolio = document
           .getElementById("inputWL")
           .value.trim()
           .toLowerCase();
 
-        if (!id || !jw) {
+        if (!id || !wolio) {
           Swal.fire("Gagal", "Kedua input harus diisi", "error");
           return;
         }
@@ -134,7 +134,7 @@
           return;
         }
 
-        kamus.push({ indonesia: id, jawa: jw });
+        kamus.push({ indonesia: id, wolio: wolio });
         simpanKamus();
 
         document.getElementById("inputID").value = "";
