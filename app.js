@@ -1,3 +1,12 @@
+try {
+  const stored = JSON.parse(localStorage.getItem("kamus"));
+  if (!Array.isArray(stored)) {
+    localStorage.removeItem("kamus");
+  }
+} catch {
+  localStorage.removeItem("kamus");
+}
+
 let kamus = JSON.parse(localStorage.getItem("kamus")) || [
   { indonesia: "ibu", wolio: "indo" },
   { indonesia: "anak", wolio: "ana" },
