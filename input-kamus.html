@@ -135,6 +135,8 @@
         }
 
         kamus.push({ indonesia: id, wolio: wolio });
+        
+        kamus.sort((a, b) => a.indonesia.localeCompare(b.indonesia));
         simpanKamus();
 
         document.getElementById("inputID").value = "";

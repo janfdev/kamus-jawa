@@ -7,6 +7,8 @@ let kamus = JSON.parse(localStorage.getItem("kamus")) || [
   { indonesia: "air", wolio: "wai" }
 ];
 
+kamus.sort((a, b) => a.indonesia.localeCompare(b.indonesia));
+
 const kataList = document.getElementById("kataList");
 const logBox = document.getElementById("log");
 let showAll = false;
@@ -64,6 +66,7 @@ function tambahKata() {
   }
 
   kamus.push({ indonesia: id, wolio: wolio });
+  kamus.sort((a, b) => a.indonesia.localeCompare(b.indonesia));
   tampilkanKata(-1, showAll);
 
   document.getElementById("inputID").value = "";
