@@ -44,7 +44,7 @@
             class="mb-3 w-full p-3 border border-gray-300 outline-none rounded-md bg-white focus:ring-2 focus:ring-green-500"
           />
           <input
-            id="inputJW"
+            id="inputWL"
             type="text"
             placeholder="Kata Jawa"
             class="mb-4 w-full p-3 border border-gray-300 outline-none rounded-md bg-white focus:ring-2 focus:ring-green-500"
@@ -83,12 +83,12 @@
 
     <script>
       let kamus = JSON.parse(localStorage.getItem("kamus")) || [
-        { indonesia: "ibu", wolio: "inaku" },
-        { indonesia: "makan", jawa: "dahar" },
-        { indonesia: "minum", jawa: "ngombe" },
-        { indonesia: "teman", jawa: "kanca" },
-        { indonesia: "ayah", jawa: "bapak" },
-        { indonesia: "ibu", jawa: "ibu" }
+        { indonesia: "ibu", wolio: "indo" },
+        { indonesia: "anak", wolio: "ana" },
+        { indonesia: "rumah", wolio: "banua" },
+        { indonesia: "makan", wolio: "kama" },
+        { indonesia: "ayah", wolio: "ama" },
+        { indonesia: "air", wolio: "wai" }
       ];
 
       const kataList = document.getElementById("kataList");
@@ -120,7 +120,7 @@
           .value.trim()
           .toLowerCase();
         const jw = document
-          .getElementById("inputJW")
+          .getElementById("inputWL")
           .value.trim()
           .toLowerCase();
 
@@ -138,7 +138,7 @@
         simpanKamus();
 
         document.getElementById("inputID").value = "";
-        document.getElementById("inputJW").value = "";
+        document.getElementById("inputWL").value = "";
         Swal.fire("Berhasil", "Kata ditambahkan ke kamus", "success");
       }
 

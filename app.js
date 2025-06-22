@@ -1,10 +1,10 @@
 let kamus = JSON.parse(localStorage.getItem("kamus")) || [
-  { indonesia: "ibu", wolio: "inaku" },
-  { indonesia: "makan", jawa: "dahar" },
-  { indonesia: "minum", jawa: "ngombe" },
-  { indonesia: "teman", jawa: "kanca" },
-  { indonesia: "ayah", jawa: "bapak" },
-  { indonesia: "ibu", jawa: "ibu" }
+  { indonesia: "ibu", wolio: "indo" },
+  { indonesia: "anak", wolio: "ana" },
+  { indonesia: "rumah", wolio: "banua" },
+  { indonesia: "makan", wolio: "kama" },
+  { indonesia: "ayah", wolio: "ama" },
+  { indonesia: "air", wolio: "wai" }
 ];
 
 const kataList = document.getElementById("kataList");
@@ -51,7 +51,7 @@ function tampilkanKata(highlightIdx = -1, showAllKata = false) {
 
 function tambahKata() {
   const id = document.getElementById("inputID").value.trim().toLowerCase();
-  const wolio= document.getElementById("inputJW").value.trim().toLowerCase();
+  const wolio = document.getElementById("inputWL").value.trim().toLowerCase();
 
   if (!id || !wolio) {
     Swal.fire("Gagal", "Kedua input harus diisi", "error");
@@ -67,7 +67,7 @@ function tambahKata() {
   tampilkanKata(-1, showAll);
 
   document.getElementById("inputID").value = "";
-  document.getElementById("inputJW").value = "";
+  document.getElementById("inputWL").value = "";
   Swal.fire("Berhasil", "Kata ditambahkan ke kamus", "success");
 }
 
@@ -89,7 +89,7 @@ function resetKamus() {
 
 async function mulaiSimulasi() {
   document.getElementById("terjemahanID").textContent = "";
-  document.getElementById("terjemahanJW").textContent = "";
+  document.getElementById("terjemahanWL").textContent = "";
   logBox.innerHTML = "";
 
   const input = document.getElementById("inputKata").value.trim().toLowerCase();
@@ -123,7 +123,7 @@ async function mulaiSimulasi() {
       document.getElementById("terjemahanID").textContent =
         kamus[mid].indonesia.charAt(0).toUpperCase() +
         kamus[mid].indonesia.slice(1);
-      document.getElementById("terjemahanJW").textContent =
+      document.getElementById("terjemahanWL").textContent =
         kamus[mid].wolio.charAt(0).toUpperCase() + kamus[mid].wolio.slice(1);
       return;
     } else if (kamus[mid].indonesia > input) {
