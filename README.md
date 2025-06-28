@@ -1,4 +1,4 @@
-# Kamus Jawa
+# Kamus Wolio
 
 ## TechStack :
 - **HTML**
